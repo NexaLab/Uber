@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 export const createAccount = createAsyncThunk("signup", async (userData) => {
-    axios.post("http://192.168.1.219:3001/api/auth/signup", userData)
+    axios.post("http://192.168.2.132:3001/api/auth/signup", userData)
         .then(res => {
             console.log(res);
             return res;
