@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import axios from "axios";
 import { updateEmailAndPassword } from "../../redux/services/LoginSlice";
+import { login } from "../../redux/services/LoginSlice";
 
 // import { useDispatch, useSelector } from 'react-redux';
 // import { updateEmailAndPassword } from '../../redux/services/SignupSlice';
@@ -16,7 +17,8 @@ export default function Login(props){
 
     const dispatch = useDispatch();
     const loginState = useSelector(state => state.loginSlice);
-    console.log(loginState)
+    // console.log(loginState)
+    
     
 
 
@@ -39,8 +41,16 @@ export default function Login(props){
 
 
     const handleLogin = async() => {
-        dispatch(updateEmailAndPassword(userDetails))
+        const response = dispatch(updateEmailAndPassword(userDetails))
+        console.log(response)
+        dispatch(login({
+            email: response.payload.email,
+            password: response.payload.password,
+        }))
     }
+
+
+
 
 
 

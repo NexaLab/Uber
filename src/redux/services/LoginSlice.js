@@ -6,9 +6,10 @@ import axios from "axios";
 
 
 export const login = createAsyncThunk("login", async (userData) => {
+    console.log(userData)
     axios.post("http://192.168.2.132:3001/api/auth/login", userData)
         .then(res => {
-            console.log(res);
+            console.log(res.data);
             return res;
         })
         .catch(error => console.log(error));
@@ -35,7 +36,6 @@ const loginSlice = createSlice({
 
     extraReducers: builder => {
 
-
         builder.addCase(login.pending, (state, action) => {
             state.isLoader = true;
         })
@@ -43,7 +43,6 @@ const loginSlice = createSlice({
 
         builder.addCase(login.fulfilled, (state, action) => {
             state.isLoader = false;
-            console.log("Logged In")
         })
 
 
