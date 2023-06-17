@@ -101,19 +101,22 @@ export default function SignUp(props) {
 
             <View style={styles.topBanner} >
 
+                <View style={styles.topBannerInner} >
 
-                <Text
-                    style=
-                    {
-                        [
-                            styles.topBannerText,
-                            {
-                                fontFamily: "UberMoveBold"
-                            }
-                        ]
-                    }>
-                    UBER
-                </Text>
+                    <Text
+                        style=
+                        {
+                            [
+                                styles.topBannerText,
+                                {
+                                    fontFamily: "UberMoveBold"
+                                }
+                            ]
+                        }>
+                        UBER
+                    </Text>
+
+                </View>
 
             </View>
 
@@ -178,12 +181,21 @@ const styles = StyleSheet.create({
 
     topBanner: {
 
-        backgroundColor: "black",
+        backgroundColor: "white",
         height: "50%",
         borderWidth: 0,
+
+    },
+
+
+    topBannerInner: {
         borderBottomRightRadius: 80,
+        backgroundColor: "black",
+        borderWidth: 0,
+        height: "100%",
         alignItems: "center",
         justifyContent: "center"
+
     },
 
 
