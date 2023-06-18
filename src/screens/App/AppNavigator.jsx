@@ -4,6 +4,7 @@ import { linking } from '../../web-routes/WebRoutes';
 import SignUp from '../SignUp/SignUp';
 import SignUpDetails from '../SignUp/SignUpDetails';
 import Dashboard from '../Dashboard/Dashboard';
+import Map from '../../components/Map/Map';
 
 
 
@@ -21,6 +22,7 @@ export default function AppNavigator() {
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUpDetails" component={SignUpDetails} options={{ headerShown: false }} />
                 <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }} />
+                <Stack.Screen name="Map" component={Map} options={{ headerShown: false }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

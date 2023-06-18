@@ -1,16 +1,58 @@
-import { Image, SafeAreaView, StyleSheet, View, Platform, TouchableOpacity, Text, Dimensions } from "react-native";
+import { Image, SafeAreaView, StyleSheet, View, TouchableOpacity, Text, Dimensions, PixelRatio, Animated, FlatList, TouchableWithoutFeedback } from "react-native";
 import { useFonts } from 'expo-font';
 import { Icon } from '@rneui/themed';
+import { subtitlePoweredByfontSize, sloganTextFontSize, sloganTextSubtitleFontSize, getARideTextFontSize } from "../../font-sizes/Dashboard";
+import { useRef, useState } from "react";
+import { menus } from "../../data/Dashboard";
 
 
 
-const height = Dimensions.get("window").height;
-const width = Dimensions.get("window").width;
 
 
 
 
 export default function Dashboard() {
+
+
+
+    const [showMenu, setShowMenu] = useState(false);
+    const [selectedMenuItem, setSelectedMenuItem] = useState(0);
+
+
+
+
+    const moveToRight = useRef(new Animated.Value(0)).current;
+    const scale = useRef(new Animated.Value(1)).current;
+
+
+
+
+
+
+    const reduceDashboardScreenSize = () => {
+
+
+        Animated.timing(scale, {
+            toValue: showMenu ? 1 : 0.6,
+            duration: 300,
+            useNativeDriver: true
+        }).start();
+
+
+        Animated.timing(moveToRight, {
+            toValue: showMenu ? 0 : 250,
+            duration: 300,
+            useNativeDriver: true
+        }).start();
+
+
+        setShowMenu(!showMenu);
+
+    }
+
+
+
+
 
 
 
@@ -32,108 +74,247 @@ export default function Dashboard() {
 
     return (
 
-
-        <SafeAreaView style={styles.dashboardContainer}>
-
-
-            <View>
-
-                <Image
-                    style={styles.uberIcon}
-                    source={
-                        require("../../../assets/Uber.png")
-                    }
-                />
-
-            </View>
-
-
-
-            <TouchableOpacity style={styles.getARideContainer}>
+        <TouchableWithoutFeedback onPress={() => {
+            showMenu === true ? reduceDashboardScreenSize() : null
+        }}>
+            <SafeAreaView style={styles.dashboardContainer} >
 
 
                 <View>
-                    <Image
-                        style={styles.carIcon}
-                        source={{ uri: "https://links.papareact.com/3pn" }}
-                    />
+
+
+                    <View
+                        style={{ width: "100%", flexDirection: "row", alignItems: "center", marginTop: 50 }}
+                    >
+
+
+                        <Image
+                            source={{ uri: "https://cdn.pixabay.com/photo/2019/11/03/20/11/portrait-4599553__340.jpg" }}
+                            style={{ width: 70, height: 70, borderRadius: 35, marginLeft: 20 }}
+                        />
+
+
+                        <View style={{ marginLeft: 20 }}>
+                            <Text style={{ fontSize: 22, fontWeight: "800", color: "white" }}>Selina Gomez</Text>
+                            <Text style={{ fontSize: 14, marginTop: 5, color: "white" }}>selina@gmail.com</Text>
+                        </View>
+
+
+
+                    </View>
+
+
+
+
+                    <View style={{ marginTop: 70 }}>
+
+
+                        <FlatList
+
+                            data={menus}
+                            renderItem={({ item, index }) => {
+                                return (
+
+                                    <TouchableOpacity
+
+                                        style={
+                                            {
+                                                width: 200,
+                                                height: 50,
+                                                marginLeft: 20,
+                                                marginTop: 20,
+                                                backgroundColor: selectedMenuItem === index ? "#ffffff" : "black",
+                                                borderRadius: 10,
+                                                flexDirection: "row",
+                                                alignItems: "center"
+                                            }}
+
+                                        onPress={() => setSelectedMenuItem(index)}
+
+                                    >
+
+
+                                        <Icon
+                                            as="Feather"
+                                            name={item.icon}
+                                            size={24}
+                                            color={selectedMenuItem === index ? "black" : "#ffffff"}
+                                            style={{ marginLeft: 15, }}
+                                        />
+
+
+                                        <Text style={{ fontSize: 18, marginLeft: 20, color: "black", fontWeight: "800", color: selectedMenuItem === index ? "black" : "#ffffff" }}>{item.title}</Text>
+
+
+                                    </TouchableOpacity>
+
+                                )
+                            }}
+
+                        />
+
+
+                    </View>
+
+
                 </View>
 
 
-                <Text
 
+
+                <Animated.View
                     style={
-                        [
-                            {
-                                fontFamily: 'CircularStdMedium'
-                            },
-
-                            styles.getARideText
-                        ]
-                    }
-
-                >Get a Ride
-                </Text>
-
-
-                <View style={styles.getARideArrowIconContainer}>
-                    <Icon name="arrow-right" type="feather" color={"white"} style={styles.getARideArrowIcon} />
-                </View>
-
-
-            </TouchableOpacity>
-
-
-            <View style={styles.dashboardSloganContainer}>
-
-
-                <Text
-
-                    style={
-                        [
-                            styles.sloganText,
-                            {
-                                fontFamily: 'UberMoveBold'
-                            }
-                        ]
-                    }
-
+                        {
+                            height: "100%",
+                            backgroundColor: "#ffffff",
+                            position: "absolute",
+                            left: 0,
+                            top: 0,
+                            bottom: 0,
+                            right: 0,
+                            transform: [{ scale: scale }, { translateX: moveToRight }],
+                            borderRadius: showMenu ? 15 : 0,
+                        }}
                 >
-                    Tap the app, get a ride!!
-                </Text>
+                    <View style={styles.uberIconAndMenuContainer}  >
 
 
-                <Text
-                    style={
-                        [
-                            styles.sloganTextSubtitle,
-                            {
-                                fontFamily: 'UberMoveBold'
+                        <View>
+
+                            <Image
+                                style={styles.uberIcon}
+                                source={
+                                    require("../../../assets/Uber.png")
+                                }
+                            />
+
+                        </View>
+
+
+
+                        <TouchableOpacity style={{ position: 'absolute', right: 30 }} onPress={reduceDashboardScreenSize}>
+
+
+                            <View >
+                                <Icon
+                                    as="Feather"
+                                    name="menu"
+                                    size={30}
+                                />
+                            </View>
+
+
+                        </TouchableOpacity>
+
+
+                    </View>
+
+
+
+
+
+                    <TouchableOpacity style={styles.getARideContainer}>
+
+
+                        <View>
+                            <Image
+                                style={styles.carIcon}
+                                source={{ uri: "https://links.papareact.com/3pn" }}
+                            />
+                        </View>
+
+
+
+                        <Text
+
+                            style={
+                                [
+                                    {
+                                        fontFamily: 'CircularStdMedium',
+                                        fontSize: getARideTextFontSize
+                                    },
+
+                                    styles.getARideText
+                                ]
                             }
-                        ]
-                    }
-                >
-                    Drive on a platform with the largest network of active passengers.
-                </Text>
+
+                        >Get a Ride
+                        </Text>
 
 
-                <Text
-                    style={
-                        [
-                            styles.sloganTextPoweredBy,
-                            {
-                                fontFamily: 'UberMoveBold'
+
+                        <View style={styles.getARideArrowIconContainer}>
+                            <Icon name="arrow-right" type="feather" color={"white"} style={styles.getARideArrowIcon} />
+                        </View>
+
+
+
+                    </TouchableOpacity>
+
+
+
+
+                    <View style={styles.dashboardSloganContainer}>
+
+
+                        <Text
+
+                            style={
+                                [
+                                    styles.sloganText,
+                                    {
+                                        fontFamily: 'UberMoveBold',
+                                        fontSize: sloganTextFontSize
+                                    }
+                                ]
                             }
-                        ]
-                    }
-                >
-                    Powered By NexaLab.
-                </Text>
 
-            </View>
+                        >
+                            Tap the app, get a ride!!
+                        </Text>
 
 
-        </SafeAreaView>
+
+                        <Text
+                            style={
+                                [
+                                    styles.sloganTextSubtitle,
+                                    {
+                                        fontFamily: 'CircularStdMedium',
+                                        fontSize: sloganTextSubtitleFontSize
+                                    }
+                                ]
+                            }
+                        >
+                            Drive on a platform with the largest network of active passengers.
+                        </Text>
+
+
+
+                        <Text
+                            style={
+                                [
+                                    styles.sloganTextPoweredBy,
+                                    {
+                                        fontFamily: 'UberMoveBold',
+                                        fontSize: subtitlePoweredByfontSize
+                                    }
+                                ]
+                            }
+                        >
+                            Powered By NexaLab.
+                        </Text>
+
+
+
+                    </View>
+
+                </Animated.View>
+
+
+
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
 
 
     )
@@ -146,8 +327,14 @@ const styles = StyleSheet.create({
 
     dashboardContainer: {
         height: "100%",
-        backgroundColor: "#ffffff",
+        backgroundColor: "black",
+    },
 
+
+    uberIconAndMenuContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: "100%",
     },
 
 
@@ -179,7 +366,6 @@ const styles = StyleSheet.create({
 
 
     getARideText: {
-        fontSize: 16,
         fontWeight: "800",
         alignSelf: "flex-start",
         marginLeft: "15%",
@@ -217,14 +403,12 @@ const styles = StyleSheet.create({
 
     sloganText: {
         fontWeight: "bold",
-        fontSize: width * 0.07
     },
 
 
     sloganTextSubtitle: {
-        fontSize: width * 0.035,
         color: "lightgray",
-        marginTop: 20,
+        marginTop: 35,
         width: "70%",
         textAlign: "center"
 
@@ -233,9 +417,9 @@ const styles = StyleSheet.create({
 
     sloganTextPoweredBy: {
 
-        fontSize: width * 0.04,
+
         color: "lightgray",
-        marginTop: 60,
+        marginTop: 80,
         width: "75%",
         textAlign: "center"
 
