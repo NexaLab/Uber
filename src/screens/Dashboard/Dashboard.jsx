@@ -72,11 +72,18 @@ export default function Dashboard() {
 
 
 
+
+
+
     return (
+
+
 
         <TouchableWithoutFeedback onPress={() => {
             showMenu === true ? reduceDashboardScreenSize() : null
         }}>
+
+
             <SafeAreaView style={styles.dashboardContainer} >
 
 

@@ -1,9 +1,13 @@
-import { Image, SafeAreaView, StyleSheet, View, TouchableOpacity, Text, Dimensions, PixelRatio } from "react-native";
-import { useFonts } from 'expo-font';
-import { Icon } from '@rneui/themed';
-import MapView from "react-native-maps";
+import { StyleSheet } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import useLocationPermission from "../../hooks/useLocationPermission/useLocationPermission";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import MapViewDirections from "react-native-maps-directions";
+import { mapMarkers } from "../../data/Map";
+import { GOOGLE_MAP_API_KEY } from "../../secret-keys/GoogleMapAPIKey";
+
+
+
 
 
 
@@ -14,7 +18,39 @@ import { useEffect } from "react";
 export default function Map() {
 
 
+
+
+    const mapRef = useRef();
     const [requestLocationPermission] = useLocationPermission();
+
+
+
+
+    const [pickAndDropState, setPickAndDropState] = useState({
+
+        pickUpCordinates: {
+            latitude: 30.7046,
+            longitude: 76.7179,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421
+
+        },
+
+
+        dropUpCordinates: {
+            latitude: 30.7333,
+            longitude: 76.7794,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01
+        }
+    });
+
+
+    const { pickUpCordinates, dropUpCordinates } = pickAndDropState;
+
+
+
+
 
 
 
@@ -29,16 +65,46 @@ export default function Map() {
 
 
 
+
     return (
+
+
         <MapView
             style={styles.mapContainer}
-            initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.09722,
-                longitudeDelta: 0.0421
-            }}
-        />
+            initialRegion={pickUpCordinates}
+            ref={mapRef}
+        >
+
+
+            <Marker coordinate={pickUpCordinates} image={mapMarkers.pickUpMarker} />
+
+            <Marker coordinate={dropUpCordinates} image={mapMarkers.destinationMarker} />
+
+
+
+
+            <MapViewDirections
+                origin={pickUpCordinates}
+                destination={dropUpCordinates}
+                apikey={GOOGLE_MAP_API_KEY}
+                strokeWidth={10}
+                strokeColor="black"
+                optimizeWaypoints={true}
+                onReady={result => {
+                    mapRef.current.fitToCoordinates(result.coordinates, {
+                        edgePadding: {
+                            right: 30,
+                            bottom: 100,
+                            left: 30,
+                            top: 100
+                        }
+                    })
+                }}
+            />
+
+        </MapView>
+
+
     )
 }
 
