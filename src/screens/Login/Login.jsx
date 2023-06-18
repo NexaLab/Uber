@@ -1,20 +1,22 @@
-import { Platform, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useFonts } from 'expo-font';
 import CustomInput from '../../components/Input/CustomInput';
 import CustomButton from '../../components/Button/CustomButton';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { updateEmailAndPassword } from '../../redux/services/SignupSlice';
+import { verifyEmailAndPassword } from '../../redux/services/LoginSlice';
+import { loginAccount} from '../../redux/services/LoginSlice';
 
 
 
-export default function SignUp(props) {
+
+export default function Login(props) {
 
 
 
     const dispatch = useDispatch();
-    const signUpState = useSelector(state => state.signUpSlice);
+    const loginState = useSelector(state => state.LoginSlice);
 
 
 
@@ -39,9 +41,24 @@ export default function SignUp(props) {
     const onChangePassword = (value) => {
         setUserDetails({ ...userDetails, password: value })
     }
+    
+
+// console.log(loginState)
 
 
+    const login = async () => {
 
+        const response =  dispatch(verifyEmailAndPassword(userDetails))
+        console.log(response)
+
+        dispatch(loginAccount({
+
+            email: response.payload.email,
+            password: response.payload.password,
+            
+        }))
+
+    }
 
 
 
@@ -56,18 +73,9 @@ export default function SignUp(props) {
 
 
 
-    const navigateToSignUpDetails = async () => {
-
-        dispatch(updateEmailAndPassword(userDetails))
-
-        navigation.navigate('SignUpDetails');
+   
 
 
-    }
-
-const navigateToLogin = async () => {
-    navigation.navigate('Login')
-}
 
 
 
@@ -98,7 +106,7 @@ const navigateToLogin = async () => {
 
     return (
 
-        <SafeAreaView style={styles.signUpContainer}>
+        <SafeAreaView style={styles.loginContainer}>
 
 
             <View style={styles.topBanner} >
@@ -136,7 +144,6 @@ const navigateToLogin = async () => {
                     />
                     <CustomInput
 
-
                         placeholder={'Password'}
                         icon={'lock'}
                         value={userDetails.password}
@@ -145,19 +152,13 @@ const navigateToLogin = async () => {
                     <CustomButton
 
 
-                        buttonText={"Next"}
+                        buttonText={"Login"}
                         fontFamily={'CircularStdMedium'}
-                        onPress={navigateToSignUpDetails}
+                        onPress={login}
                         width={300}
 
 
                     />
-                     <CustomButton
-                            buttonText={"Login"}
-                            fontFamily={'CircularStdMedium'}
-                            onPress={navigateToLogin}
-                            width={300}
-                            />
 
                 </View>
 
@@ -178,7 +179,7 @@ const navigateToLogin = async () => {
 const styles = StyleSheet.create({
 
 
-    signUpContainer: {
+    loginContainer: {
 
         height: "100%",
     },
