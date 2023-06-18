@@ -15,7 +15,7 @@ import { GOOGLE_MAP_API_KEY } from "../../secret-keys/GoogleMapAPIKey";
 
 
 
-export default function Map() {
+export default function Map(props) {
 
 
 
@@ -38,8 +38,8 @@ export default function Map() {
 
 
         dropUpCordinates: {
-            latitude: 30.7333,
-            longitude: 76.7794,
+            latitude: props.dropUpCoordinates.latitude != null ? props.dropUpCoordinates.latitude : 30.7333,
+            longitude: props.dropUpCoordinates.longitude != null ? props.dropUpCoordinates.longitude : 76.7794,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01
         }
@@ -53,13 +53,35 @@ export default function Map() {
 
 
 
+    useEffect(() => {
+
+
+        setPickAndDropState(prevState => ({
+            ...prevState,
+            dropUpCordinates: {
+                latitude: props.dropUpCoordinates.latitude != null ? props.dropUpCoordinates.latitude : 30.7333,
+                longitude: props.dropUpCoordinates.longitude != null ? props.dropUpCoordinates.longitude : 76.7794,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01
+            }
+        }));
+
+
+    }, [props.dropUpCoordinates]);
+
+
+
+
+
+
+
 
 
     useEffect(() => {
 
         requestLocationPermission();
 
-    }, [])
+    }, []);
 
 
 

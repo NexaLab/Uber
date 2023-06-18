@@ -22,7 +22,7 @@ export default function CustomGooglePlacesAutoComplete(props) {
 
         const latitude = details.geometry.location.lat;
         const longitude = details.geometry.location.lng;
-        props.fetchAddress(latitude, longitude);
+        props.fetchDropUp(latitude, longitude);
 
 
     }
