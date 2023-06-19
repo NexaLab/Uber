@@ -6,6 +6,7 @@ import { Icon } from "@rneui/themed";
 
 
 
+navigator.geolocation = require('react-native-geolocation-service');
 
 
 
@@ -63,6 +64,8 @@ export default function CustomGooglePlacesAutoComplete(props) {
                 placeholder={props.placeholderText}
                 onPress={onSelectAddress}
                 fetchDetails={true}
+                currentLocation={true}
+                currentLocationLabel="Current location"
                 renderLeftButton={() => (
 
                     <View style={styles.dropUpLocationContainer}>
