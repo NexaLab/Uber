@@ -2,6 +2,7 @@ import CustomGooglePlacesAutoComplete from "../../components/GooglePlacesAutoCom
 import Map from "../../components/Map/Map";
 import { View } from "react-native";
 import { useState } from "react";
+import Footer from "../../components/Footer/Footer";
 
 
 
@@ -48,6 +49,7 @@ export default function BookARide() {
         <>
             <Map dropUpCoordinates={dropUpCoordinates} />
             <CustomGooglePlacesAutoComplete placeholderText={"Enter Drop up Location"} fetchDropUp={fetchDropUpCoordinates} />
+            <Footer />
         </>
 
 

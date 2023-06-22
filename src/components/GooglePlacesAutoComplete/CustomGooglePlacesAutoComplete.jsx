@@ -3,6 +3,10 @@ import { GOOGLE_MAP_API_KEY } from "../../secret-keys/GoogleMapAPIKey";
 import { View, StyleSheet, Text } from "react-native";
 import { useFonts } from 'expo-font';
 import { Icon } from "@rneui/themed";
+import { dropUpLocationFontSize } from "../../font-sizes/GooglePlacesAutoComplete";
+
+
+
 
 
 
@@ -64,11 +68,9 @@ export default function CustomGooglePlacesAutoComplete(props) {
                 placeholder={props.placeholderText}
                 onPress={onSelectAddress}
                 fetchDetails={true}
-                currentLocation={true}
-                currentLocationLabel="Current location"
                 renderLeftButton={() => (
 
-                    <View style={styles.dropUpLocationContainer}>
+                    <View style={styles.dropUpLocationIconContainer}>
                         <Icon name='location-pin' />
                     </View>
 
@@ -83,7 +85,8 @@ export default function CustomGooglePlacesAutoComplete(props) {
                     textInput: [
                         styles.textInputStyle,
                         {
-                            fontFamily: 'UberMoveBold'
+                            fontFamily: 'UberMoveBold',
+                            fontSize: dropUpLocationFontSize
                         }
                     ]
                 }}
@@ -109,16 +112,17 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#ffffff",
         padding: 20,
-        paddingTop: 50
+        paddingTop: 50,
     },
 
 
-    dropUpLocationContainer: {
+    dropUpLocationIconContainer: {
         justifyContent: "center"
     },
 
 
     containerStyle: {
+        padding: 2,
         paddingLeft: 10,
         backgroundColor: "white",
         borderColor: "#F3F3F3",
@@ -128,6 +132,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,          // Shadow opacity (0 to 1)
         shadowRadius: 3,              // Shadow radius
         elevation: 5,
+        borderRadius: 15
+
     },
 
 
