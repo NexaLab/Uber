@@ -24,6 +24,6 @@ const ratio = width / targetWidth;
 
 
 
-const dropUpLocationBaseFontSize = 16;
+const dropUpLocationBaseFontSize = 14.5;
 const dropUpLocationAdjustedFontSize = dropUpLocationBaseFontSize / scaleFactor;
 export const dropUpLocationFontSize = dropUpLocationAdjustedFontSize * ratio;

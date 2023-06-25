@@ -71,7 +71,7 @@ export default function CustomGooglePlacesAutoComplete(props) {
                 renderLeftButton={() => (
 
                     <View style={styles.dropUpLocationIconContainer}>
-                        <Icon name='location-pin' />
+                        <Icon name='location-pin' color={"#414a4c"} size={19.5} />
                     </View>
 
                 )}
@@ -111,19 +111,19 @@ const styles = StyleSheet.create({
     googleAutoCompleteContainer: {
         flex: 1,
         backgroundColor: "#ffffff",
-        padding: 20,
+        padding: 25.5,
         paddingTop: 50,
     },
 
 
     dropUpLocationIconContainer: {
-        justifyContent: "center"
+        justifyContent: "center",
     },
 
 
     containerStyle: {
-        padding: 2,
-        paddingLeft: 10,
+        padding: 0.5,
+        paddingLeft: 13,
         backgroundColor: "white",
         borderColor: "#F3F3F3",
         borderWidth: 1,
@@ -132,16 +132,17 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,          // Shadow opacity (0 to 1)
         shadowRadius: 3,              // Shadow radius
         elevation: 5,
-        borderRadius: 15
+        borderRadius: 11.5
 
     },
 
 
     textInputStyle: {
         height: 48,
-        color: "black",
+        color: "#414a4c",
         fontWeight: "700",
-        fontSize: 16,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        marginLeft: 1,
+        marginTop: 3
     }
 })
