@@ -205,6 +205,6 @@ const styles = StyleSheet.create({
 
 
     mapContainer: {
-        flex: 1
+        flex: 2
     }
 })

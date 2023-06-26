@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
 
 
     googleAutoCompleteContainer: {
-        flex: 1,
+        flex: 0.5,
         backgroundColor: "#ffffff",
         padding: 25.5,
         paddingTop: 50,
